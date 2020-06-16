@@ -48,7 +48,7 @@ ui <- fluidPage(
 server <- function(input, output){
   dat <- reactive({
     max_k <-
-      (input$a / (input$delta + input$n + input$g))**(1 / (1 - input$alpha))
+      (input$a / (input$delta + input$n + input$g)) ** (1 / (1 - input$alpha))
     k <- seq(0, ifelse(input$k == 0, max_k*2, input$k), 0.01)
     y <- input$a * k ** input$alpha
     sy <- input$s * y
