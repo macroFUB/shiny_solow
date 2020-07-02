@@ -131,14 +131,13 @@ server <- function(input, output){
         linetype="dashed", colour="black"
       ) +
       geom_point(aes(x=k_star, y=y_star), size=2) +
-      theme(plot.background=element_rect(fill=bgc))
+      theme(
+        plot.background=element_rect(fill=bgc), legend.title=element_blank()
+        )
   })
   output$graph2 <- renderPlot({
     bgc <- ifelse(input$alpha_2 == input$s_2, "#FFD700", "white")
-    ggplot(data=dat2(), aes(x=k)) +
-      geom_line(aes(y=y, colour="y"), linetype="dotted", size=1) +
-      geom_line(aes(y=sy, colour="sy"), linetype="dotted", size=1) +
-      geom_line(aes(y=dk, colour="(d+n+g)k"), linetype="dotted", size=1) +
+    big_plot <- ggplot(data=dat2(), aes(x=k)) +
       geom_segment(
         aes(x=k_star, y=0, xend=k_star, yend=y_star),
         linetype="dashed", colour="black"
@@ -149,9 +148,6 @@ server <- function(input, output){
       ) +
       geom_point(aes(x=k_star, y=y_star), size=2) +
       theme(plot.background=element_rect(fill=bgc)) +
-      geom_line(aes(y=y_2, colour="y_2"), size=1) +
-      geom_line(aes(y=sy_2, colour="sy_2"), size=1) +
-      geom_line(aes(y=dk_2, colour="(d+n+g)k_2"), size=1) +
       geom_segment(
         aes(x=k_star_2, y=0, xend=k_star_2, yend=y_star_2),
         linetype="dashed", colour="red"
@@ -160,7 +156,38 @@ server <- function(input, output){
         aes(x=0, y=y_star_2, xend=k_star_2, yend=y_star_2),
         linetype="dashed", colour="red"
       ) +
-      geom_point(aes(x=k_star_2, y=y_star_2), size=2, colour="red")
+      geom_point(aes(x=k_star_2, y=y_star_2), size=2, colour="red") +
+      theme(legend.title = element_blank())
+    if (all(dat2()$y == dat2()$y_2)) {
+      big_plot <- big_plot +
+        geom_line(aes(y=y, colour="y"), size=1)
+    }
+    if (all(dat2()$sy == dat2()$sy_2)) {
+      big_plot <- big_plot +
+        geom_line(aes(y=sy, colour="sy"), size=1)
+    }
+   if (all(dat2()$dk == dat2()$dk_2)) {
+     big_plot <- big_plot +
+       geom_line(aes(y=dk, colour="dk"), size=1)
+    }
+    if (!all(dat2()$y == dat2()$y_2)) {
+      big_plot <- big_plot +
+        geom_line(
+          data=dat2(), aes(x=k, y=y_2, colour="y", linetype="new"), size=1
+          ) +
+        geom_line(aes(y=y, colour="y", linetype="old"), size=0.7)
+    }
+    if (!all(dat2()$sy == dat2()$sy_2)) {
+      big_plot <- big_plot +
+        geom_line(aes(y=sy_2, colour="sy", linetype="new"), size=1) +
+        geom_line(aes(y=sy, colour="sy", linetype="old"), size=0.7)
+    }
+    if (!all(dat2()$dk == dat2()$dk_2)) {
+      big_plot <- big_plot +
+        geom_line(aes(y=dk_2, colour="dk", linetype="new"),  size=1) +
+        geom_line(aes(y=dk, colour="dk", linetype="old"), size=0.7)
+    }
+    big_plot
   })
   output$click_info <- renderPrint({
     cat("input$plot_click:\n")
