@@ -192,7 +192,7 @@ server <- function(input, output){
   output$click_info <- renderPrint({
     cat("input$plot_click:\n")
     cx <- as.numeric(input$plot_click["x"])
-    cy <- (cx ** (1/(1 - input$alpha)))
+    cy <- cx ** input$alpha
     cs <- input$s * cy
     cd <- (input$delta + input$g + input$n) * cx
     data.frame(
@@ -205,7 +205,7 @@ server <- function(input, output){
   output$click_info2 <- renderPrint({
     cat("input$plot_click2:\n")
     cx_2 <- as.numeric(input$plot_click2["x"])
-    cy_2 <- (cx_2 ** (1/(1 - input$alpha_2)))
+    cy_2 <- cx_2 ** input$alpha_2
     cs_2 <- input$s_2 * cy_2
     cd_2 <- (input$delta_2 + input$g_2 + input$n_2) * cx_2
     data.frame(
@@ -252,7 +252,7 @@ server <- function(input, output){
     )
     equil <- t(equil)
     equil <- data.frame(
-      "var"=c("k*", "y*", "c*", "y*"),
+      "var"=c("k*", "y*", "c*", "sy*"),
       "new"=equil[, 1],
       "old"=equil[, 2],
       "delta"=equil[, 3]
