@@ -3,6 +3,8 @@ Small shiny app for teaching.
 
 It depicts the effects of changes in different parameters on the steady state of a simple Cobb-Dougas production function.
 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/makhro/shiny_solow/HEAD)
+
 Copyright (C) 2020  Johannes Michael Ossadnik, Universität Rostock, Lehrstuhl für Angewandte Makroökonomie, Wirtschafts- und Sozialwissenschaftliche Fakultät der Universität Rostock.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version. 
