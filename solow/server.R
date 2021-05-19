@@ -5,7 +5,7 @@ server <- function(input, output){
   dat <- reactive({
     max_k <-
       (1 / (input$delta + input$n + input$g)) ** (1 / (1 - input$alpha))
-    k <- seq(0, ifelse(input$k == 0, max_k*2, input$k), .1)
+    k <- seq(0, ifelse(input$k == 0, max_k*2, input$k), .01)
     y <- k ** input$alpha
     sy <- input$s * y
     dk <- (input$delta + input$n + input$g) * k
@@ -20,7 +20,7 @@ server <- function(input, output){
   dat2 <- reactive({
     max_k <-
       (1 / (input$delta + input$n + input$g)) ** (1 / (1 - input$alpha))
-    k <- seq(0, ifelse(input$k == 0, max_k*2, input$k), .1)
+    k <- seq(0, ifelse(input$k == 0, max_k*2, input$k), .01)
     y <- k ** input$alpha
     sy <- input$s * y
     dk <- (input$delta + input$n + input$g) * k
@@ -60,7 +60,9 @@ server <- function(input, output){
       geom_point(aes(x=k_star, y=y_star), size=2) +
       theme(
         plot.background=element_rect(fill=bgc), legend.title=element_blank()
-        )
+        ) +
+      scale_y_continuous(expand = expand_scale(), limits = c(0, 1)) +
+      scale_x_continuous(expand = expand_scale(), limits = c(0, 1.5))
   })
   output$graph2 <- renderPlot({
     bgc <- ifelse(input$alpha_2 == input$s_2, "#FFD700", "white")
@@ -84,7 +86,9 @@ server <- function(input, output){
         linetype="dashed", colour="red"
       ) +
       geom_point(aes(x=k_star_2, y=y_star_2), size=2, colour="red") +
-      theme(legend.title = element_blank())
+      theme(legend.title = element_blank()) +
+      scale_y_continuous(expand = expand_scale(), limits = c(0, 1)) +
+      scale_x_continuous(expand = expand_scale(), limits = c(0, 1.5))
     if (all(dat2()$y == dat2()$y_2)) {
       big_plot <- big_plot +
         geom_line(aes(y=y, colour="y"), size=1)
