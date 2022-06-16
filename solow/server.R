@@ -46,8 +46,8 @@ server <- function(input, output){
   output$graph <- renderPlot({
     bgc <- ifelse(input$alpha == input$s, "#FFD700", "white")
     ggplot(data=dat(), aes(x=k)) +
-      geom_line(aes(y=y, colour="y"), size=1) +
-      geom_line(aes(y=sy, colour="sy"), size=1) +
+      geom_line(aes(y=y, colour="y"), size=1.3) +
+      geom_line(aes(y=sy, colour="sy"), size=1.3) +
       geom_line(aes(y=dk, colour="(d+n+g)k")) +
       geom_segment(
         aes(x=k_star, y=0, xend=k_star, yend=y_star),
@@ -61,8 +61,8 @@ server <- function(input, output){
       theme(
         plot.background=element_rect(fill=bgc), legend.title=element_blank()
         ) +
-      scale_y_continuous(expand = expand_scale(), limits = c(0, 1)) +
-      scale_x_continuous(expand = expand_scale(), limits = c(0, 1.5))
+      scale_y_continuous(expand = expand_scale()) +
+      scale_x_continuous(expand = expand_scale())
   })
   output$graph2 <- renderPlot({
     bgc <- ifelse(input$alpha_2 == input$s_2, "#FFD700", "white")
@@ -87,8 +87,8 @@ server <- function(input, output){
       ) +
       geom_point(aes(x=k_star_2, y=y_star_2), size=2, colour="red") +
       theme(legend.title = element_blank()) +
-      scale_y_continuous(expand = expand_scale(), limits = c(0, 1)) +
-      scale_x_continuous(expand = expand_scale(), limits = c(0, 1.5))
+      scale_y_continuous(expand = expand_scale()) +
+      scale_x_continuous(expand = expand_scale())
     if (all(dat2()$y == dat2()$y_2)) {
       big_plot <- big_plot +
         geom_line(aes(y=y, colour="y"), size=1)
