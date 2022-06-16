@@ -4,7 +4,7 @@ library(mathjaxr)
 ui <- fluidPage(
   titlePanel("Solow-Modell"),
   withMathJax(helpText(
-    "Cobb-Douglas-Produktionsfunktion:\n $$K^\\alpha+(L\\times E)^{1-\\alpha}$$"
+    "Cobb-Douglas-Produktionsfunktion:\n $$K^\\alpha(L\\times E)^{1-\\alpha}$$"
   )),
   sidebarLayout(
     sidebarPanel(
@@ -20,16 +20,16 @@ ui <- fluidPage(
           step=0.1
         ),
         sliderInput(
-          inputId="delta", label="delta", value=0.3, min=0.05,
-          max=0.95, step=0.05
+          inputId="delta", label="delta", value=0.3, min=0.01,
+          max=0.5, step=0.01
         ),
         sliderInput(
-          inputId="n", label="n", value=0.3, min=0.05, max=0.95,
-          step=0.05
+          inputId="n", label="n", value=0.3, min=0.01, max=0.5,
+          step=0.01
         ),
         sliderInput(
-          inputId="g", label="g", value=0.3, min=0.05, max=0.95,
-          step=0.05
+          inputId="g", label="g", value=0.3, min=0.01, max=0.5,
+          step=0.01
         ),
         actionButton("fixFunc", "aktuelle Parameter fixieren")
       ),
